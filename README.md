@@ -5,6 +5,8 @@
 - [Protocol Definition](#protocol-definition)
 - [TODOs](#todos)
 
+![Screenshot of CLI](./screenshot.png)
+
 ## Overview
 
 ILRC is a chat protocol that rides on top of the Interledger stack instead of
@@ -17,7 +19,28 @@ ILRC comes with a server and a client implementation.
 
 ILRC is based on a JSON protocol, which differentiates it from IRC (based in plaintext).
 
-**TODO**
+#### Nick
+
+Set nickname. Equivalent to IRC's `NICK`.
+
+```json
+{
+  "type": "nick",
+  "nick": "Alice"
+}
+```
+
+#### Privmsg
+
+Send message to channel or user. Equivalent to IRC's `PRIVMSG`.
+
+```json
+{
+  "type": "privmsg",
+  "channel": "#global",
+  "message": "Hello World!"
+}
+```
 
 ## TODOs
 
