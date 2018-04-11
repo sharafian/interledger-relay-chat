@@ -25,4 +25,6 @@ ILRC is based on a JSON protocol, which differentiates it from IRC (based in pla
 - [X] Send message
 - [ ] Send message with money
 - [ ] Join channels
-- [ ] Fix up UI
+- [X] Fix up UI
+- [ ] Neaten up code
+- [ ] Connect by Payment Pointer
