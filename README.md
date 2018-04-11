@@ -50,4 +50,4 @@ Send message to channel or user. Equivalent to IRC's `PRIVMSG`.
 - [ ] Join channels
 - [X] Fix up UI
 - [ ] Neaten up code
-- [ ] Connect by Payment Pointer
+- [X] Connect by Payment Pointer

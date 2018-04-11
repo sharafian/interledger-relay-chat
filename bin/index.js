@@ -2,6 +2,7 @@ const IlpStream = require('ilp-protocol-stream')
 const chalk = require('chalk')
 const plugin = require('ilp-plugin')()
 const readline = require('readline')
+const SPSP = require('ilp-protocol-spsp')
 
 async function run () {
   await plugin.connect()
@@ -70,7 +71,9 @@ async function run () {
     }
 
     if (cmd.startsWith('/connect')) {
-      const [, destinationAccount, sharedSecret ] = cmd.split(' ')
+      const [, endpoint ] = cmd.split(' ')
+      const { destinationAccount, sharedSecret } = await SPSP.query(endpoint)
+
       console.log(chalk.grey('connecting...'))
       connection = await IlpStream.createConnection({
         plugin,

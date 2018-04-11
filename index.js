@@ -2,6 +2,8 @@ const IlpStream = require('ilp-protocol-stream')
 const makePlugin = require('ilp-plugin')
 const crypto = require('crypto')
 const plugin = makePlugin()
+const Koa = require('koa')
+const app = new Koa()
 
 async function run () {
   await plugin.connect()
@@ -88,14 +90,19 @@ async function run () {
 
   await server.listen()
 
-  let details = server.generateAddressAndSecret()
-  console.log('/connect', details.destinationAccount, details.sharedSecret.toString('base64'))
-  details = server.generateAddressAndSecret()
-  console.log('/connect', details.destinationAccount, details.sharedSecret.toString('base64'))
-  details = server.generateAddressAndSecret()
-  console.log('/connect', details.destinationAccount, details.sharedSecret.toString('base64'))
-  details = server.generateAddressAndSecret()
-  console.log('/connect', details.destinationAccount, details.sharedSecret.toString('base64'))
+  app.use(async (ctx, next) => {
+    const { destinationAccount, sharedSecret } = server.generateAddressAndSecret()
+
+    ctx.set('Content-Type', 'application/spsp+json')
+    ctx.body = {
+      destination_account: destinationAccount,
+      shared_secret: sharedSecret.toString('base64') 
+    }
+  })
+
+  const port = process.env.PORT || 6677
+  app.listen(port)
+  console.log('/connect http://localhost:' + port)
 }
 
 run()
