@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/sharafian/interledger-relay-chat/issues"
   },
-  "homepage": "https://github.com/sharafian/interledger-relay-chat#readme"
+  "homepage": "https://github.com/sharafian/interledger-relay-chat#readme",
+  "dependencies": {
+    "ilp-plugin": "^3.1.0",
+    "ilp-protocol-stream": "^0.1.2"
+  }
 }
