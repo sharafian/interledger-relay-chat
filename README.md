@@ -21,7 +21,8 @@ ILRC is based on a JSON protocol, which differentiates it from IRC (based in pla
 
 ## TODOs
 
-- [ ] Join and register nickname
-- [ ] Send message
+- [X] Join and register nickname
+- [X] Send message
 - [ ] Send message with money
 - [ ] Join channels
+- [ ] Fix up UI
