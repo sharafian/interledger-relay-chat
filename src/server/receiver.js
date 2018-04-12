@@ -1,4 +1,5 @@
 const IlpStream = require('ilp-protocol-stream')
+const stripAnsi = require('strip-ansi')
 const makePlugin = require('ilp-plugin')
 const crypto = require('crypto')
 
@@ -53,7 +54,7 @@ class Receiver {
 
   async _handle ({ money, data, userId }) {
     const text = data.toString('utf8')
-    const json = JSON.parse(text)
+    const json = JSON.parse(stripAnsi(text))
 
     try {
       switch (json.type) {

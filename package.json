@@ -28,6 +28,7 @@
     "ilp-protocol-spsp": "^2.0.0",
     "ilp-protocol-stream": "github:interledgerjs/ilp-protocol-stream#es-combine-stream-types",
     "reduct": "^3.2.0",
+    "strip-ansi": "^4.0.0",
     "yargs": "^11.0.0"
   },
   "devDependencies": {

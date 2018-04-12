@@ -1,4 +1,5 @@
 const readLine = require('readline')
+const stripAnsi = require('strip-ansi')
 const chalk = require('chalk')
 const EventEmitter = require('events')
 
@@ -50,7 +51,7 @@ class Render extends EventEmitter {
   }
 
   printNickConfirm (nick) {
-    console.log('confirmed nick', this._color(nick, nick))
+    console.log('confirmed nick', this._color(nick, stripAnsi(nick)))
   }
 
   printError (error) {
@@ -69,18 +70,18 @@ class Render extends EventEmitter {
 
     switch (n.type) {
       case 'error':
-        console.log(n.error)
+        console.log(stripAnsi(n.error))
         break
 
       case 'privmsg':
-        console.log(this._color(n.nick, n.nick + ':'), n.message)
+        console.log(this._color(n.nick, stripAnsi(n.nick) + ':'), stripAnsi(n.message))
         break
 
       case 'success':
         break
 
       default:
-        console.log(JSON.stringify(n))
+        console.log(stripAnsi(JSON.stringify(n)))
         break
     }
 
