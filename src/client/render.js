@@ -33,7 +33,8 @@ class Render extends EventEmitter {
 
   _color (nick, text) {
     if (!this.colorMap.get(nick)) {
-      this.colorMap.set(nick, COLORS[this.colorIndex++])
+      this.colorMap.set(nick, COLORS[this.colorIndex])
+      this.colorIndex = (this.colorIndex + 1) % COLORS.length
     }
 
     return this.colorMap.get(nick)(text)
