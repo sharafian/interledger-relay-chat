@@ -45,10 +45,22 @@ In the current version, all messages go to a `#global` channel.
 Hello World
 ```
 
+#### Command-Line Flags
+
+- `--file <ilrcrc file>` - Defaults to `~/.ilrcrc`. If the file exists, then
+  the lines are read in and processed line by line. For example, to automatically
+  connect to a server and login to your nick, you could have a `~/.ilrcrc` with the
+  following contents:
+
+```
+/connect http://localhost:6677
+/nick alice password
+``` 
+
 #### Command Reference
 
 - `/connect <SPSP receiver>` - Connects to a server. This can only be done once.
-- `/nick <Name>` - Set your nickname on the server. This can only be done once.
+- `/nick <Name> [Password]` - Set your nickname on the server.
 - `<Text>` - Send a message to the chat. Currently, this goes to `#global`.
 
 ### Server
