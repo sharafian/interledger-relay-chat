@@ -1,4 +1,5 @@
 const makePlugin = require('ilp-plugin')
+const stripAnsi = require('strip-ansi')
 const uuid = require('uuid')
 const IlpStream = require('ilp-protocol-stream')
 const SPSP = require('ilp-protocol-spsp')
@@ -39,7 +40,7 @@ class Sender extends EventEmitter {
 
   async handle ({ money, data }) {
     const text = data.toString('utf8')
-    const json = JSON.parse(text)
+    const json = JSON.parse(stripAnsi(text))
 
     if (json.id) {
       this.emit('_' + json.id, json)
