@@ -18,9 +18,12 @@
   "homepage": "https://github.com/sharafian/interledger-relay-chat#readme",
   "dependencies": {
     "chalk": "^2.3.2",
+    "fs-extra": "^5.0.0",
     "ilp-plugin": "^3.1.0",
     "ilp-protocol-spsp": "^2.0.0",
-    "reduct": "^3.2.0"
+    "ilp-protocol-stream": "../ilp-protocol-stream",
+    "reduct": "^3.2.0",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "koa": "^2.5.0"

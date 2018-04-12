@@ -20,6 +20,15 @@ class Render extends EventEmitter {
 
     this.colorIndex = 0
     this.colorMap = new Map()
+    this.tty = true
+  }
+
+  enableTTY () {
+    this.tty = true
+  }
+
+  disableTTY () {
+    this.tty = false
   }
 
   _color (nick, text) {
@@ -31,6 +40,7 @@ class Render extends EventEmitter {
   }
 
   clearText (line) {
+    if (!this.tty) return
     const linesToClear = line.length / process.stdout.columns
     for (let i = 0; i < linesToClear; ++i) {
       readLine.moveCursor(process.stdout, 0, -1)
@@ -51,8 +61,10 @@ class Render extends EventEmitter {
   }
 
   printNotification (n) {
-    readLine.cursorTo(process.stdout, 0, null)
-    readLine.clearLine(process.stdout, 0)
+    if (this.tty) {
+      readLine.cursorTo(process.stdout, 0, null)
+      readLine.clearLine(process.stdout, 0)
+    }
 
     switch (n.type) {
       case 'error':
@@ -60,7 +72,7 @@ class Render extends EventEmitter {
         break
 
       case 'privmsg':
-        console.log(this._color(n.nick, n.nick + ': '), n.message)
+        console.log(this._color(n.nick, n.nick + ':'), n.message)
         break
 
       case 'success':
@@ -71,7 +83,9 @@ class Render extends EventEmitter {
         break
     }
 
-    this.rl.prompt()
+    if (this.tty) {
+      this.rl.prompt()
+    }
   }
 
   async init () {
@@ -81,7 +95,9 @@ class Render extends EventEmitter {
   }
 
   prompt () {
-    this.rl.prompt()
+    if (this.tty) {
+      this.rl.prompt()
+    }
   }
 }
 
