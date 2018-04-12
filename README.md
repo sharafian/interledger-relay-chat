@@ -106,5 +106,5 @@ Send message to channel or user. Equivalent to IRC's `PRIVMSG`.
 - [ ] Send message with money
 - [ ] Join channels
 - [X] Fix up UI
-- [ ] Neaten up code
+- [X] Neaten up code
 - [X] Connect by Payment Pointer

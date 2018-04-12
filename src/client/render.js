@@ -1,0 +1,88 @@
+const readLine = require('readline')
+const chalk = require('chalk')
+const EventEmitter = require('events')
+
+const COLORS = [
+  chalk.green,
+  chalk.blue,
+  chalk.yellow,
+  chalk.magenta,
+  chalk.cyan
+]
+
+class Render extends EventEmitter {
+  constructor (deps) {
+    super()
+    this.rl = readLine.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
+
+    this.colorIndex = 0
+    this.colorMap = new Map()
+  }
+
+  _color (nick, text) {
+    if (!this.colorMap.get(nick)) {
+      this.colorMap.set(nick, COLORS[this.colorIndex++])
+    }
+
+    return this.colorMap.get(nick)(text)
+  }
+
+  clearText (line) {
+    const linesToClear = line.length / process.stdout.columns
+    for (let i = 0; i < linesToClear; ++i) {
+      readLine.moveCursor(process.stdout, 0, -1)
+      readLine.clearLine(process.stdout, 0)
+    }
+  }
+
+  printNickConfirm (nick) {
+    console.log('confirmed nick', this._color(nick, nick))
+  }
+
+  printError (error) {
+    console.log(chalk.red(error.error))
+  }
+
+  printInfo (message) {
+    console.log(chalk.grey(message))
+  }
+
+  printNotification (n) {
+    readLine.cursorTo(process.stdout, 0, null)
+    readLine.clearLine(process.stdout, 0)
+
+    switch (n.type) {
+      case 'error':
+        console.log(n.error)
+        break
+
+      case 'privmsg':
+        console.log(this._color(n.nick, n.nick + ': '), n.message)
+        break
+
+      case 'success':
+        break
+
+      default:
+        console.log(JSON.stringify(n))
+        break
+    }
+
+    this.rl.prompt()
+  }
+
+  async init () {
+    this.rl.on('line', line => this.emit('line', line))
+    this.rl.setPrompt('>> ')
+    this.rl.prompt()
+  }
+
+  prompt () {
+    this.rl.prompt()
+  }
+}
+
+module.exports = Render

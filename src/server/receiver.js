@@ -67,7 +67,7 @@ class Receiver {
         case 'privmsg':
           const { nick } = this._users.get(userId)
           if (!nick) {  
-            throw new Error('user must have nick. userId=' + userId)
+            throw new Error('user must have nick.')
           }
           const users = this._users.getChannelUsers(json.channel)
           const message = {
