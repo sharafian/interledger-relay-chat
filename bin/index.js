@@ -39,7 +39,7 @@ async function run () {
     if (!connection) {
       console.log('must be connected.')
     } else {
-      const message = connection.createDataStream()
+      const message = connection.createStream()
       await new Promise(resolve => {
         message.write(JSON.stringify(obj), () => {
           message.end()
@@ -80,7 +80,7 @@ async function run () {
         destinationAccount,
         sharedSecret: Buffer.from(sharedSecret, 'base64')
       })
-      connection.on('data_stream', stream => {
+      connection.on('stream', stream => {
         stream.on('data', handleData)
       })
       connection.on('close', () => {
