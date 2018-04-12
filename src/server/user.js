@@ -19,16 +19,17 @@ class User {
 
   // TODO: delete users
 
-  setNick ({ userId, nick }) {
+  setNick ({ userId, nick, password }) {
     if (nick.startsWith('#')) {
       throw new Error('only channels may start with "#". nick=' + nick)
     }
 
-    if (this._nicks.get(nick)) {
+    const existing = this._nicks.get(nick)
+    if (existing && (!existing.password || existing.password !== password)) {
       throw new Error('nick is already taken. nick=' + nick) 
     }
 
-    this._nicks.set(nick, userId)
+    this._nicks.set(nick, { userId, password })
     this._users.get(userId).nick = nick
   }
 
@@ -47,7 +48,7 @@ class User {
 
   getChannelUsers (channel) {
     if (this._nicks.get(channel)) {
-      return new Set([ this._nicks.get(channel) ])
+      return new Set([ this._nicks.get(channel).userId ])
     }
 
     if (!this._channels.get(channel)) {

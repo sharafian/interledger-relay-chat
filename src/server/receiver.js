@@ -58,7 +58,11 @@ class Receiver {
     try {
       switch (json.type) {
         case 'nick':
-          this._users.setNick({ userId, nick: json.nick })
+          this._users.setNick({ 
+            userId,
+            nick: json.nick,
+            password: json.password
+          })
           console.log('set nick.' +
             ' nick=' + json.nick +
             ' userId=' + userId)
