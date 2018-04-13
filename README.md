@@ -115,8 +115,11 @@ Send message to channel or user. Equivalent to IRC's `PRIVMSG`.
 
 - [X] Join and register nickname
 - [X] Send message
-- [ ] Send message with money
+- [X] Send message with money
 - [ ] Join channels
 - [X] Fix up UI
 - [X] Neaten up code
 - [X] Connect by Payment Pointer
+- [ ] Password persistence
+- [ ] Fix the readline interrupt when notifications come in
+- [ ] Convert server units to local units for display
