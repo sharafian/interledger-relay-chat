@@ -28,6 +28,15 @@ class Interface {
       } else {
         this.render.printError(response)
       }
+    } else if (cmd.startsWith('/pay')) {
+      const [, payee, amount ] = cmd.split(' ')
+      const response = await this.sender.call({ type: 'pay', channel: '#global', payee }, amount)
+
+      if (response.type === 'success') {
+        // this.render.printPayConfirm(payee, amount)
+      } else {
+        this.render.printError(response)
+      }
     } else if (cmd.match(/^\s*$/)) {
     } else if (!cmd.startsWith('/')) {
       const response = await this.sender.call({ type: 'privmsg', message: cmd, channel: '#global' })

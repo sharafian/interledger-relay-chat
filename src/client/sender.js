@@ -47,10 +47,10 @@ class Sender extends EventEmitter {
       return
     }
 
-    this.render.printNotification(json)
+    this.render.printNotification(json, money)
   }
 
-  async call (message) {
+  async call (message, money) {
     if (!this.connection) {
       return { type: 'error', error: 'you are not connected.' }
     }
@@ -58,7 +58,8 @@ class Sender extends EventEmitter {
     const id = uuid()
     await this.stream.writeJSON({
       connection: this.connection,
-      message: Object.assign({ id }, message)
+      message: Object.assign({ id }, message),
+      money
     })
 
     return new Promise(resolve => {

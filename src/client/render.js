@@ -38,7 +38,7 @@ class Render extends EventEmitter {
       this.colorIndex = (this.colorIndex + 1) % COLORS.length
     }
 
-    return this.colorMap.get(nick)(text)
+    return this.colorMap.get(nick)(stripAnsi(text || nick))
   }
 
   clearText (line) {
@@ -50,8 +50,21 @@ class Render extends EventEmitter {
     }
   }
 
+  clearLine () {
+    if (this.tty) {
+      readLine.cursorTo(process.stdout, 0, null)
+      readLine.clearLine(process.stdout, 0)
+    }
+  }
+
   printNickConfirm (nick) {
-    console.log('confirmed nick', this._color(nick, stripAnsi(nick)))
+    this.clearLine()
+    console.log('\rconfirmed nick', this._color(nick))
+  }
+
+  printPayConfirm (nick, amount) {
+    this.clearLine()
+    console.log('paid ' + chalk.yellow(amount) + ' to ' + this._color(nick))
   }
 
   printError (error) {
@@ -62,11 +75,8 @@ class Render extends EventEmitter {
     console.log(chalk.grey(message))
   }
 
-  printNotification (n) {
-    if (this.tty) {
-      readLine.cursorTo(process.stdout, 0, null)
-      readLine.clearLine(process.stdout, 0)
-    }
+  printNotification (n, money) {
+    this.clearLine()
 
     switch (n.type) {
       case 'error':
@@ -74,14 +84,31 @@ class Render extends EventEmitter {
         break
 
       case 'privmsg':
-        console.log(this._color(n.nick, stripAnsi(n.nick) + ':'), stripAnsi(n.message))
+        console.log(this._color(n.nick, n.nick + ':'), stripAnsi(n.message))
         break
 
       case 'success':
         break
 
+      case 'pay':
+        if (n.nick === n.payee) {
+          if (money) {
+            console.log('you paid yourself', chalk.yellow(money))
+          } else {
+            console.log(this._color(n.nick), 'paid themselves', chalk.yellow(n.money))
+          }
+        } else {
+          if (money) {
+            console.log(this._color(n.nick), 'paid you', chalk.yellow(money))
+          } else {
+            console.log(this._color(n.nick), 'paid', chalk.yellow(n.money),
+              'to', this._color(n.payee))
+          }
+        }
+        break
+
       default:
-        console.log(stripAnsi(JSON.stringify(n)))
+        console.log(stripAnsi(JSON.stringify(n)), money)
         break
     }
 
