@@ -17,6 +17,10 @@ class User {
     return this._users.get(userId)    
   }
 
+  getByNick (nick) {
+    return this._nicks.get(nick).userId
+  }
+
   // TODO: delete users
 
   setNick ({ userId, nick, password }) {
@@ -39,20 +43,20 @@ class User {
     }
 
     if (!this._channels.get(channel)) {
-      this._channels.set(channel, new Set())
+      this._channels.set(channel, new Array())
     }
 
-    this._channels.get(channel).add(userId)
+    this._channels.get(channel).push(userId)
     console.log(this._channels.get(channel))
   }
 
   getChannelUsers (channel) {
     if (this._nicks.get(channel)) {
-      return new Set([ this._nicks.get(channel).userId ])
+      return [ this._nicks.get(channel).userId ]
     }
 
     if (!this._channels.get(channel)) {
-      this._channels.set(channel, new Set())
+      this._channels.set(channel, new Array())
     }
 
     return this._channels.get(channel)
