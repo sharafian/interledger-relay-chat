@@ -61,6 +61,7 @@ Hello World
 
 - `/connect <SPSP receiver>` - Connects to a server. This can only be done once.
 - `/nick <Name> [Password]` - Set your nickname on the server.
+- `/pay <Name> <Amount>` - Send `Amount` units to `Name`.
 - `<Text>` - Send a message to the chat. Currently, this goes to `#global`.
 
 ### Server
@@ -108,6 +109,19 @@ Send message to channel or user. Equivalent to IRC's `PRIVMSG`.
   "type": "privmsg",
   "channel": "#global",
   "message": "Hello World!"
+}
+```
+
+#### Pay
+
+Send money to a user. A `channel` parameter specifies which channel
+to inform about this. This message must be sent along with money.
+
+```json
+{
+  "type": "pay",
+  "payee": "Alice",
+  "channel": "#global"
 }
 ```
 
